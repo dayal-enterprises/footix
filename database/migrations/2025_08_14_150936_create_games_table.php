@@ -23,6 +23,8 @@ return new class extends Migration
                 GameStatusEnum::REPORTE->value,
                 GameStatusEnum::ANNULE->value,
             ])->nullable();
+            $table->string('referee')->nullable();
+            $table->string('competition')->nullable();
             $table->timestamps();
         });
     }
