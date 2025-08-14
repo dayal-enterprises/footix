@@ -7,6 +7,13 @@
     <title>Footix</title>
 </head>
 <body>
-    
+    <ul>
+        <li>
+            <a href="{{ route('teams.index') }}">
+                Liste des équipes
+            </a>
+        </li>
+    </ul>
+    @yield('content')
 </body>
 </html>

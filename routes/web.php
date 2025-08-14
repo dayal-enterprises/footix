@@ -1,7 +1,8 @@
 <?php
 
+use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [TeamController::class, 'index'])->name('home');
+
+Route::resource('/teams', TeamController::class)->except(['create', 'edit', 'update', 'destroy']);
