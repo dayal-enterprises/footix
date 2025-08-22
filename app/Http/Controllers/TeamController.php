@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateTeamRequest;
+use App\Models\Team;
 use Illuminate\Http\Request;
 
 class TeamController extends Controller
@@ -11,7 +13,10 @@ class TeamController extends Controller
      */
     public function index()
     {
-        return view('teams.index');
+        $teams = Team::all();
+        return view('teams.index', [
+            'teams' => $teams,
+        ]);
     }
 
     /**
@@ -25,9 +30,19 @@ class TeamController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateTeamRequest $request)
     {
-        //
+        $file = $request->file('logo');
+        if ($file)
+            $path = $file->store('logos', 'public');
+
+        Team::create([
+            'name' => $request->name,
+            'creation_date' => $request->creation_date,
+            'logo' => $file ? $path : null,
+        ]);
+
+        return back()->with('success', "Equipe créée avec succès !");
     }
 
     /**
@@ -43,15 +58,30 @@ class TeamController extends Controller
      */
     public function edit(string $id)
     {
-        return view('teams.edit');
+        $team = Team::find($id);
+        return view('teams.edit', [
+            'team' => $team,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CreateTeamRequest $request, string $id)
     {
-        //
+        $file = $request->file('logo');
+        if ($file)
+            $path = $file->store('logos', 'public');
+
+        $team = Team::find($id);
+
+        $team->update([
+            'name' => $request->name,
+            'creation_date' => $request->creation_date,
+            'logo' => $file ? $path : $team->logo,
+        ]);
+
+        return back()->with('success', "Equipe créée avec succès !");
     }
 
     /**
