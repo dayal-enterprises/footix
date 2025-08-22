@@ -13,6 +13,11 @@
                 Liste des équipes
             </a>
         </li>
+        <li>
+            <a href="{{ route('players.index') }}">
+                Liste des joueurs
+            </a>
+        </li>
     </ul>
     @yield('content')
 </body>

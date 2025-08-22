@@ -10,6 +10,7 @@
         <div>
             <img src="{{ $team->logo == null ? URL::asset('images/placeholder.png') : Storage::url($team->logo) }}" alt="{{ $team->name }}" width="50">-
             {{ $team->name }} - {{ $team->creation_date }} - 
+            Nombre de joueurs : {{ $team->players->count() }} - 
             <a href="{{ route('teams.edit', $team->id) }}">
                 Modifier
             </a>
